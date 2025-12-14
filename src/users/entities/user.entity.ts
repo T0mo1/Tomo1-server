@@ -1,7 +1,16 @@
-export class User {
+export class Parent {
     id!: number;
-    email!: string;
+    phoneNumber!: string;
     firstName?: string;
     lastName?: string;
+    createdAt!: Date;
+}
+
+export class Child {
+    id!: number;
+    firstName!: string;
+    lastName!: string;
+    dob!: Date;
+    parentId!: string;
     createdAt!: Date;
 }
