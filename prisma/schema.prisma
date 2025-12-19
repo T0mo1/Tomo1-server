@@ -25,4 +25,28 @@ model Child {
   createdAt DateTime @default(now())
   parent    Parent? @relation(fields: [parentId], references: [id])  
   parentId  String
+  tests     TestResult[]
+}
+
+model TestResult {
+  id              String        @id @default(uuid())
+  childId         String
+  child           Child         @relation(fields: [childId], references: [id], onDelete: Cascade)
+  testType        String        // 'yesno' | 'multiple' | 'cc'
+  score           Int           
+  totalTimeSpent  Int           
+  answers         TestAnswer[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model TestAnswer {
+  id          String      @id @default(uuid())
+  testId      String
+  test        TestResult  @relation(fields: [testId], references: [id], onDelete: Cascade)
+  questionId  String
+  answer      String      // JSON string để lưu các loại answer khác nhau
+  timeSpent   Int         
+  isCorrect   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
 }
