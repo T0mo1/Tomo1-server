@@ -26,3 +26,17 @@ model Child {
   parent    Parent? @relation(fields: [parentId], references: [id])  
   parentId  String
 }
+
+model DenverQuestion {
+  id           String   @id @default(uuid())
+  questionId   String   @unique
+  text         String
+  ageMonthMin  Int
+  ageMonthMax  Int
+  category     String
+  type         String
+  options      String[] 
+  minCorrect   Int?
+  audio        String?
+  createdAt    DateTime @default(now())
+}

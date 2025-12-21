@@ -72,7 +72,7 @@ export class DenverQuestionsController {
 
         return this.denverQuestionsService.findAll();
     }
-
+    
     /**
      * Get questions for specific age
      */

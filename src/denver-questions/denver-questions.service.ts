@@ -37,36 +37,59 @@ export class DenverQuestionsService {
                     let failed = 0;
 
                     // Bulk insert with transaction
+                    // try {
+                    //     await this.prisma.$transaction(async (tx) => {
+                    //         for (const question of questions) {
+                    //             try {
+                    //                 await tx.denverQuestion.create({
+                    //                     data: {
+                    //                         questionId: question.questionId,
+                    //                         text: question.text,
+                    //                         ageMonthMin: question.ageMonthMin,
+                    //                         ageMonthMax: question.ageMonthMax,
+                    //                         category: question.category,
+                    //                         type: question.type,
+                    //                         options: question.options || undefined,
+                    //                         minCorrect: question.minCorrect || undefined,
+                    //                         audio: question.audio || undefined,
+                    //                     },
+                    //                 });
+                    //                 imported++;
+                    //             } catch (error) {
+                    //                 failed++;
+                    //                 const message = error instanceof Error ? error.message : String(error);
+                    //                 errors.push(
+                    //                     `Failed to insert ${question.questionId}: ${message}`,
+                    //                 );
+                    //             }
+                    //         }
+                    //     });
+                    // } catch (error) {
+                    //     const message = error instanceof Error ? error.message : String(error);
+                    //     errors.push(`Transaction failed: ${message}`);
+                    // }
+
                     try {
-                        await this.prisma.$transaction(async (tx) => {
-                            for (const question of questions) {
-                                try {
-                                    await tx.denverQuestion.create({
-                                        data: {
-                                            questionId: question.questionId,
-                                            text: question.text,
-                                            ageMonthMin: question.ageMonthMin,
-                                            ageMonthMax: question.ageMonthMax,
-                                            category: question.category,
-                                            type: question.type,
-                                            options: question.options || undefined,
-                                            minCorrect: question.minCorrect || undefined,
-                                            audio: question.audio || undefined,
-                                        },
-                                    });
-                                    imported++;
-                                } catch (error) {
-                                    failed++;
-                                    const message = error instanceof Error ? error.message : String(error);
-                                    errors.push(
-                                        `Failed to insert ${question.questionId}: ${message}`,
-                                    );
-                                }
-                            }
-                        });
+                        const result = await this.prisma.denverQuestion.createMany({
+                            data: questions.map(q => ({
+                                questionId: q.questionId,
+                                text: q.text,
+                                ageMonthMin: q.ageMonthMin,
+                                ageMonthMax: q.ageMonthMax,
+                                category: q.category,
+                                type: q.type,
+                                options: q.options ?? undefined,
+                                minCorrect: q.minCorrect ?? undefined,
+                                audio: q.audio ?? undefined,
+                            })),
+                            skipDuplicates: true,
+                    });
+
+                        imported = result.count;
+                        failed = questions.length - result.count;
                     } catch (error) {
                         const message = error instanceof Error ? error.message : String(error);
-                        errors.push(`Transaction failed: ${message}`);
+                        errors.push(`Bulk insert failed: ${message}`);
                     }
 
                     resolve({
