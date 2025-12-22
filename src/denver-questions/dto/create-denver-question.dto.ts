@@ -1,4 +1,4 @@
-import { IsString, IsInt, IsOptional, IsArray, IsIn, Min } from 'class-validator';
+import { IsString, IsInt, IsOptional, IsArray, IsIn, Min, IsNumber } from 'class-validator';
 
 export class CreateDenverQuestionDto {
     @IsString()
@@ -7,11 +7,11 @@ export class CreateDenverQuestionDto {
     @IsString()
     text!: string;
 
-    @IsInt()
+    @IsNumber()
     @Min(0)
     ageMonthMin!: number;
 
-    @IsInt()
+    @IsNumber()
     @Min(0)
     ageMonthMax!: number;
 
