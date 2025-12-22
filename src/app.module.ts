@@ -5,9 +5,10 @@ import { ConfigModule } from './config/config.module.js';
 import { DatabaseModule } from './database/database.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
+import { DenverQuestionsModule } from './denver-questions/denver-questions.module.js';
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, AuthModule, UsersModule],
+  imports: [ConfigModule, DatabaseModule, AuthModule, UsersModule, DenverQuestionsModule],
   controllers: [AppController],
   providers: [AppService],
 })

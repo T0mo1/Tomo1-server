@@ -43,7 +43,7 @@ export class DenverQuestionsService {
                                 try {
                                     await tx.denverQuestion.create({
                                         data: {
-                                            questionId: question.questionId,
+                                            id: question.questionId,
                                             text: question.text,
                                             ageMonthMin: question.ageMonthMin,
                                             ageMonthMax: question.ageMonthMax,
@@ -103,8 +103,8 @@ export class DenverQuestionsService {
         const dto: CreateDenverQuestionDto = {
             questionId: row.questionId.trim(),
             text: row.text.trim(),
-            ageMonthMin: parseInt(row.ageMonthMin, 10),
-            ageMonthMax: parseInt(row.ageMonthMax, 10),
+            ageMonthMin: parseFloat(row.ageMonthMin),
+            ageMonthMax: parseFloat(row.ageMonthMax),
             category: row.category.trim(),
             type: row.type.trim(),
         };
@@ -152,7 +152,7 @@ export class DenverQuestionsService {
      */
     async findAll() {
         return this.prisma.denverQuestion.findMany({
-            orderBy: [{ ageMonthMin: 'asc' }, { questionId: 'asc' }],
+            orderBy: [{ ageMonthMin: 'asc' }, { id: 'asc' }],
         });
     }
 
@@ -165,7 +165,7 @@ export class DenverQuestionsService {
                 ageMonthMin: { lte: ageMonths },
                 ageMonthMax: { gte: ageMonths },
             },
-            orderBy: [{ ageMonthMin: 'asc' }, { questionId: 'asc' }],
+            orderBy: [{ ageMonthMin: 'asc' }, { id: 'asc' }],
         });
     }
 
@@ -175,7 +175,7 @@ export class DenverQuestionsService {
     async findByCategory(category: string) {
         return this.prisma.denverQuestion.findMany({
             where: { category },
-            orderBy: [{ ageMonthMin: 'asc' }, { questionId: 'asc' }],
+            orderBy: [{ ageMonthMin: 'asc' }, { id: 'asc' }],
         });
     }
 
@@ -185,7 +185,7 @@ export class DenverQuestionsService {
     async findByType(type: string) {
         return this.prisma.denverQuestion.findMany({
             where: { type },
-            orderBy: [{ ageMonthMin: 'asc' }, { questionId: 'asc' }],
+            orderBy: [{ ageMonthMin: 'asc' }, { id: 'asc' }],
         });
     }
 
@@ -203,7 +203,7 @@ export class DenverQuestionsService {
      */
     async findByQuestionId(questionId: string) {
         return this.prisma.denverQuestion.findUnique({
-            where: { questionId },
+            where: { id: questionId },
         });
     }
 
