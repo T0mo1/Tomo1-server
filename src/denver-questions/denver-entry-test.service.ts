@@ -2,7 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service.js';
 import { StartTestDto, SubmitTestDto, TestResultDto, QuestionResultDto } from './dto/entry-test.dto.js';
 import { DENVER_AGE_RANGES } from './constants/age-ranges.constant.js';
-import { DenverQuestion } from '../../generated/prisma/client.js';
+import { DenverQuestion } from '../../generated/prisma/index.js';
 
 @Injectable()
 export class DenverEntryTestService {
