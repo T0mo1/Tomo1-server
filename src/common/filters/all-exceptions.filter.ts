@@ -6,6 +6,8 @@ import {
     HttpStatus,
 } from '@nestjs/common';
 import { Response } from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -28,6 +30,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
             timestamp: new Date().toISOString(),
             message: typeof message === 'string' ? message : (message as any).message || message,
         };
+
+        const logMessage = `[${errorResponse.timestamp}] ${status} - ${errorResponse.message}\n${exception instanceof Error ? exception.stack : JSON.stringify(exception)}\n\n`;
+        try {
+            fs.appendFileSync(path.join(process.cwd(), 'error.log'), logMessage);
+        } catch (err) {
+            console.error('Failed to write to error.log', err);
+        }
 
         console.error('Exception caught:', exception);
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Parent, Child } from '@/generated/prisma/client.js';
+import { Parent, Child } from '../generated/prisma/index.js';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto.js';
 import { CreateChildDto } from './dto/create-child.dto.js';
@@ -25,7 +25,7 @@ export class UsersService {
     }
 
     async createChild(data: CreateChildDto): Promise<Child> {
-         return this.prisma.child.create({
+        return this.prisma.child.create({
             data: {
                 parentId: data.parentId,
                 dob: new Date(data.dob),
