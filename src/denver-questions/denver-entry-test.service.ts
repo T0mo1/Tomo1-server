@@ -75,6 +75,8 @@ export class DenverEntryTestService {
         const results: QuestionResultDto[] = [];
         let passedCount = 0;
         let failedCount = 0;
+        let consecutivePasses = 0;
+        const CONSECUTIVE_PASS_LIMIT = 3;
 
         let maxPassedAgeMonths = 0;
         let stoppingPoint: TestResultDto['stoppingPoint'] = undefined;
@@ -92,6 +94,7 @@ export class DenverEntryTestService {
 
             if (result === 'D') {
                 passedCount++;
+                consecutivePasses++;
                 if (question.ageMonthMax > maxPassedAgeMonths) {
                     maxPassedAgeMonths = question.ageMonthMax;
                     stoppingPoint = {
@@ -102,6 +105,11 @@ export class DenverEntryTestService {
                 }
             } else {
                 failedCount++;
+                consecutivePasses = 0;
+            }
+
+            if (consecutivePasses >= CONSECUTIVE_PASS_LIMIT) {
+                break;
             }
         }
 
