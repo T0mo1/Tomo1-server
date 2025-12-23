@@ -6,6 +6,9 @@ export const envSchema = z.object({
     DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
     JWT_SECRET: z.string().min(1, 'JWT_SECRET is required'),
     JWT_EXPIRATION: z.string().default('1h'),
+    ALLOWED_ORIGINS: z.string()
+        .default('http://localhost:5173,https://tomo1-interface.vercel.app')
+        .transform((val) => val.split(',').map(s => s.trim())),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;
