@@ -23,10 +23,9 @@ export class CreateDenverQuestionDto {
     @IsIn(['yes-no', 'multiple'])
     type!: string;
 
-    @IsOptional()
     @IsArray()
-    @IsString({ each: true })
-    options?: string[];
+    @IsOptional()
+    options?: any[];
 
     @IsOptional()
     @IsInt()
