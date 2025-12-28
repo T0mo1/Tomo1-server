@@ -49,7 +49,14 @@ export class TestResultDto {
         days: number;
         totalMonths: number;
     };
+    developmentalAge!: {
+        years: number;
+        months: number;
+        days: number;
+        totalMonths: number;
+    };
     ageRange!: string;
+    classification!: 'Mầm' | 'Chồi' | 'Lá';
     results!: QuestionResultDto[];
     stoppingPoint?: {
         questionId: string;
@@ -60,6 +67,6 @@ export class TestResultDto {
         totalQuestions: number;
         passed: number;
         failed: number;
-        isAdvanced?: boolean; // Just a placeholder for "mental-age logic" aggregation
+        consecutivePasses: number;
     };
 }
