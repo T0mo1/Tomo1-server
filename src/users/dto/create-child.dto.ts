@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty} from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional} from 'class-validator';
 
 export class CreateChildDto {
     @IsString()
@@ -6,8 +6,8 @@ export class CreateChildDto {
     firstName!: string;
 
     @IsString()
-    @IsNotEmpty()
-    lastName!: string;
+    @IsOptional()
+    lastName?: string;
 
     @IsNotEmpty()
     dob!: Date;

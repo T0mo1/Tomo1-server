@@ -1,18 +1,32 @@
-import { IsEmail, IsString, MinLength, IsOptional } from 'class-validator';
+import { IsString, MinLength, IsNotEmpty, IsDateString, IsOptional } from 'class-validator';
 
 export class RegisterDto {
+    // Parent fields
     @IsString()
+    @IsNotEmpty()
+    firstName!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    lastName!: string;
+
+    @IsString()
+    @IsNotEmpty()
     phoneNumber!: string;
 
     @IsString()
     @MinLength(6)
     password!: string;
 
+    // Child fields
     @IsString()
-    @IsOptional()
-    firstName?: string;
+    @IsNotEmpty()
+    childFirstName!: string;
 
     @IsString()
     @IsOptional()
-    lastName?: string;
+    childLastName?: string;
+
+    @IsDateString()
+    childDob!: string;
 }

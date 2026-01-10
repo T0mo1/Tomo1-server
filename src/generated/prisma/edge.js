@@ -139,15 +139,15 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
-};
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
 };
 
 
@@ -164,7 +164,7 @@ const config = {
   "clientVersion": "7.1.0",
   "engineVersion": "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Parent {\n  id          String   @id @default(uuid())\n  phoneNumber String   @unique\n  password    String\n  firstName   String\n  lastName    String\n  createdAt   DateTime @default(now())\n  children    Child[]\n}\n\nmodel Child {\n  id        String   @id @default(uuid())\n  firstName String\n  lastName  String\n  dob       DateTime\n  createdAt DateTime @default(now())\n  parent    Parent?  @relation(fields: [parentId], references: [id])\n  parentId  String\n}\n\nmodel DenverQuestion {\n  id          String   @id\n  text        String\n  ageMonthMin Float\n  ageMonthMax Float\n  category    String\n  type        String\n  options     Json?\n  minCorrect  Int?\n  audio       String?\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n}\n"
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Parent {\n  id          String   @id @default(uuid())\n  phoneNumber String   @unique\n  password    String\n  firstName   String\n  lastName    String\n  createdAt   DateTime @default(now())\n  children    Child[]\n}\n\nmodel Child {\n  id        String   @id @default(uuid())\n  firstName String\n  lastName  String?\n  dob       DateTime\n  createdAt DateTime @default(now())\n  parent    Parent   @relation(fields: [parentId], references: [id], onDelete: Cascade)\n  parentId  String\n}\n\nmodel DenverQuestion {\n  id          String   @id\n  text        String\n  ageMonthMin Float\n  ageMonthMax Float\n  category    String\n  type        String\n  options     Json?\n  minCorrect  Int?\n  audio       String?\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n}\n"
 }
 
 config.runtimeDataModel = JSON.parse("{\"models\":{\"Parent\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phoneNumber\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"children\",\"kind\":\"object\",\"type\":\"Child\",\"relationName\":\"ChildToParent\"}],\"dbName\":null},\"Child\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"dob\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"parent\",\"kind\":\"object\",\"type\":\"Parent\",\"relationName\":\"ChildToParent\"},{\"name\":\"parentId\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"DenverQuestion\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ageMonthMin\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"ageMonthMax\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"category\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"options\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"minCorrect\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"audio\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
